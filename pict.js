@@ -4,6 +4,7 @@ function Pict(parent){
 	this.dom = document.createElement('canvas');
 	this.parent.appendChild(this.dom);        //DOMの生成
 	this.context = this.dom.getContext('2d');
+	this.data = null;
 
 	// create instance
 	this.reader = new FileReader();
@@ -44,6 +45,7 @@ Pict.prototype.fileLoad = function(eve) {
 	img.addEventListener('load', (function(){
 		console.log('load!!!');
 		this.canvasDraw(img);
+		this.getPictData(img);
 	}).bind(this), false);
 	img.src = eve.target.result;
 };
@@ -60,58 +62,26 @@ Pict.prototype.canvasDraw = function(image) {
 	this.context.drawImage(image, 0, 0);
 }
 
-
 /**
-*setUpEvent
-*マウスイベント
-*@param {int} lineWidth - 受け取る数字1
-*@param {int} lineWidth - 受け取る数字2
-*/
+ * キャンバス領域のピクセルデータを表す
+ */
+ Pict.prototype.getPictData = function() {
+
+	this.data = this.context.getImageData(0, 0, this.dom.width, this.dom.height);
+	console.log(this.data);
+}
 /*
-Paint.prototype.setUpEvent = function(){
-	this.dom.addEventListener('mousemove', (function(eve){
-		if(this.flag === true){
-			console.log(eve);
+Pict.prototype.Effect = function() {
 
-			var rect = eve.target.getBoundingClientRect(); //絶対座標の取得
-			var x = eve.clientX - rect.left; //マウスクリックの座標を取得
-			var y = eve.clientY - rect.top;  
-			console.log(x,y);
-			//this.context.fillRect(x,y,10,10);
+	var output = this.context.createImageData(this.dom.width, this.dom.height);
 
-			this.context.beginPath();
-			this.context.moveTo(this.prevX,this.prevY);
-			this.context.lineTo(x,y);
-			this.context.closePath();
-			this.context.stroke();
-			this.prevX = x;  //１つ前の座標として登録
-			this.prevY = y;
-			//this.context.fillRect(x,y,10,10);
-		}
-	}).bind(this), false);
-
-	this.dom.addEventListener('mousedown', (function(eve){ //マウスを押したとき
-		this.flag = true;
-		var rect = eve.target.getBoundingClientRect(); 
-		var	x = eve.clientX - rect.left;
-		var	y = eve.clientY - rect.top;
-
-		this.prevX = x;
-		this.prevY = y;
-
-	}).bind(this), false);
-
-	this.dom.addEventListener('mouseup', (function(eve) { //マウスを離したとき
-		this.flag = false;
-	}).bind(this), false);
-
-};
+}
 */
 /**
 *setUpWindow
 *キャンバスの大きさを変える
-*@param {int} lineWidth - 受け取る数字1
-*@param {int} lineWidth - 受け取る数字2
+*@param {int} width - 受け取る数字1
+*@param {int} height - 受け取る数字2
 */
 
 Pict.prototype.setUpWindow = function(width,height){
