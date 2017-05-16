@@ -46,6 +46,7 @@ Pict.prototype.fileLoad = function(eve) {
 		console.log('load!!!');
 		this.canvasDraw(img);
 		this.getPictData(img);
+		this.grayScale(img);
 	}).bind(this), false);
 	img.src = eve.target.result;
 };
@@ -70,13 +71,28 @@ Pict.prototype.canvasDraw = function(image) {
 	this.data = this.context.getImageData(0, 0, this.dom.width, this.dom.height);
 	console.log(this.data);
 }
-/*
-Pict.prototype.Effect = function() {
 
+/**
+ * 画像をグレースケールに変換する
+ */
+
+Pict.prototype.grayScale = function() {
+
+	var inputData = this.data.data;  //this.dataのdataを取得する
 	var output = this.context.createImageData(this.dom.width, this.dom.height);
-
+	var outputData = output.data;
+	var i = 0;
+	
+	for(i=0; i<inputData.length; i = i + 4){
+		var pixel = (inputData[i] + inputData[i+1] + inputData[i+2]) / 3;
+		outputData[i] = pixel;
+		outputData[i+1] = pixel;
+		outputData[i+2] = pixel;
+		outputData[i+3] = inputData[i+3];
+	}
+	this.context.putImageData(output, 0, 0);
 }
-*/
+
 /**
 *setUpWindow
 *キャンバスの大きさを変える
