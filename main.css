@@ -1,0 +1,13 @@
+#title{
+	color:darkorange;
+}
+
+body,html{
+margin:0;
+cursor: default;
+}
+
+div{
+	height: 100px;
+}
+
