@@ -1,17 +1,25 @@
-function Paint(parent){
+function Pict(parent){
 	this.parent = parent;
 	this.dom = document.createElement('canvas');
 
-	this.parent.appendChild(this.dom);
+	this.parent.appendChild(this.dom);        //DOMの生成
 	this.context = this.dom.getContext('2d');
 
+	var inputFile = document.getElementById('id_file');
+	
 
-	this.flag = false;
-	this.prevX =0;
-	this.prevY =0;
+	/** 
+	 * ファイルの選択
+	*/
+	function fileSelect(eve){ 
+	var files = eve.files;       //FIleオブジェクトの取得
+	
+	var file = file[0];          //最初のファイルを取得
+	if(!file) return;            //ファイルがなかったらやめる  
+	console.log(file);
+	}
+//	inputFile.addEventListener('change', fileSelect, false);
 
-	this.setUpEvent();
-	//this.setUpWindow();
 }
 
 /**
@@ -20,7 +28,7 @@ function Paint(parent){
 *@param {int} lineWidth - 受け取る数字1
 *@param {int} lineWidth - 受け取る数字2
 */
-
+/*
 Paint.prototype.setUpEvent = function(){
 	this.dom.addEventListener('mousemove', (function(eve){
 		if(this.flag === true){
@@ -59,19 +67,19 @@ Paint.prototype.setUpEvent = function(){
 	}).bind(this), false);
 
 };
-
+*/
 /**
 *setUpWindow
 *キャンバスの大きさを変える
 *@param {int} lineWidth - 受け取る数字1
 *@param {int} lineWidth - 受け取る数字2
 */
-
+/*
 Paint.prototype.setUpWindow = function(width,height){
 	this.dom.width=width;
 	this.dom.height=height;
 };
-
+*/
 /**
 *setUpColor
 *ペンの色を変える
@@ -79,34 +87,35 @@ Paint.prototype.setUpWindow = function(width,height){
 *あるいは
 *@param {#******} color -16進数(カラーコード)
 */
-
+/*
 Paint.prototype.setUpColor = function(color){
 	this.context.strokeStyle=color;
 };
-
+*/
 /**
 *setUpLineWidth
 *ペンの太さを変える
 *@param {int} lineWidth - 受け取る数字
 */
-
+/*
 Paint.prototype.setUpLineWidth = function(lineWidth){
 	this.context.lineWidth=lineWidth;
 };
-
+*/
 /**
 *resetCanvas
 *キャンバスを白紙に戻す
 */
-
+/*
 Paint.prototype.resetCanvas = function(){
 	this.context.clearRect(0,0,this.dom.width,this.dom.height);
 };
-
+*/
 /**
  * Test
  * テキストを受け取って出すだけクラス
  */
+/*
 function Test(){
 	this.text = '';                           // 自分に設定されているテキスト
 	this.parent = null;                       // 親 DOM
@@ -116,13 +125,14 @@ function Test(){
 	this.dom.style.width = '100px';
 	this.dom.style.height = '100px';
 }
-
+*/
 /**
  * setText
  * テキストを受け取って自身のプロパティを更新
  * @param {string} arg1 - うけとる文字そのいち
  * @param {string} arg2 - うけとる文字そのに
  */
+/*
 Test.prototype.setText = function(arg1, arg2){
 	this.text = arg1 + arg2;
 	this.dom.textContent = this.text;
@@ -131,7 +141,7 @@ Test.prototype.appendDOM = function(parent){
 	this.parent = parent;
 	this.parent.appendChild(this.dom);
 };
-
+*/
 
 /*window.addEventListener('load',function(){
 	var canvas = document.getElementById('id_canvas');
