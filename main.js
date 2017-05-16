@@ -1,6 +1,8 @@
 window.addEventListener('load',function(){
 	var p = new Pict(document.body);
-	//p.setUpWindow(500,500);
+	p.setUpWindow(500,500);
+	//var e = new Effect(document.body);
+	//e.setUpWindow(500,500);
 	/*p.setUpColor('#00fdfa');
 	p.setUpLineWidth(15);
 	var t = new Test();

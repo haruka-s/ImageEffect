@@ -1,38 +1,64 @@
 function Pict(parent){
+	// initialize
 	this.parent = parent;
 	this.dom = document.createElement('canvas');
-
 	this.parent.appendChild(this.dom);        //DOMの生成
 	this.context = this.dom.getContext('2d');
 
+	// create instance
+	this.reader = new FileReader();
+
+	// attach event
 	var inputFile = document.getElementById('id_file');
-	var reader = new FileReader();
+	inputFile.addEventListener('change', this.fileSelect.bind(this), false);
+	this.reader.addEventListener('load', this.fileLoad.bind(this), false);
 
-	/** 
-	 * ファイルの選択
-	*/
-	function fileSelect(eve){
-		var target = eve.target;
-		var files = target.files;       //FIleオブジェクトの取得
-		var file = target.files[0];     //最初のファイルを取得
- 
-		console.log(files);
-		reader.readAsDataURL(file);     //画像をDataURLとして読み込む
-	}
-
-	/** 
-	 * ファイルの読み込み
-	 * 読み込んだ画像をウィンドウに表示
-	*/
-	function fileLoad(eve) {
-		document.getElementById("img").setAttribute("src",eve.target.result);
-  		console.log(reader.result);
-	}
-
-	inputFile.addEventListener('change', fileSelect, false);
-	reader.addEventListener('load', fileLoad, false);
+	// other setup
+	this.setUpWindow();
 }
 
+
+/** 
+ * ファイルの選択イベントの際に呼び出される
+*/
+Pict.prototype.fileSelect = function(eve){
+	var target = eve.target;
+	var files = target.files;       //FIleオブジェクトの取得
+	var file = target.files[0];     //最初のファイルを取得
+
+	console.log(files);
+
+	this.reader.readAsDataURL(file);     //画像をDataURLとして読み込む
+};
+
+/** 
+ * ファイルの読み込み
+ * 読み込んだ画像をウィンドウに表示
+*/
+
+Pict.prototype.fileLoad = function(eve) {
+	var getImage = document.getElementById("img");
+	getImage.setAttribute("src",eve.target.result);
+	//console.log(reader.result);
+	var img = new Image();
+	img.addEventListener('load', (function(){
+		console.log('load!!!');
+		this.canvasDraw(img);
+	}).bind(this), false);
+	img.src = eve.target.result;
+};
+
+/** 
+ * キャンバスに画像を表示する
+ * キャンバスのサイズは、画像データの取得時に画像と同サイズに変更される
+ * drawImage(描画イメージ、x座標、y座標)
+*/
+
+Pict.prototype.canvasDraw = function(image) {
+	this.dom.width = image.width;
+	this.dom.height = image.height;
+	this.context.drawImage(image, 0, 0);
+}
 
 
 /**
@@ -87,19 +113,8 @@ Paint.prototype.setUpEvent = function(){
 *@param {int} lineWidth - 受け取る数字1
 *@param {int} lineWidth - 受け取る数字2
 */
-/*
-Paint.prototype.setUpWindow = function(width,height){
+
+Pict.prototype.setUpWindow = function(width,height){
 	this.dom.width=width;
 	this.dom.height=height;
 };
-*/
-
-/**
-*resetCanvas
-*キャンバスを白紙に戻す
-*/
-/*
-Paint.prototype.resetCanvas = function(){
-	this.context.clearRect(0,0,this.dom.width,this.dom.height);
-};
-*/
